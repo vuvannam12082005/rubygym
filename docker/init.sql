@@ -1,0 +1,88 @@
+CREATE DATABASE IF NOT EXISTS rubygym;
+USE rubygym;
+
+CREATE TABLE users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    email VARCHAR(255) UNIQUE NOT NULL,
+    password_hash VARCHAR(255) NOT NULL,
+    full_name VARCHAR(255),
+    phone VARCHAR(20),
+    role ENUM('ADMIN', 'TRAINER', 'MEMBER') NOT NULL DEFAULT 'MEMBER',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE trainers (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    specialization VARCHAR(255),
+    max_daily_hours INT DEFAULT 8,
+    FOREIGN KEY (user_id) REFERENCES users(id)
+);
+
+CREATE TABLE members (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    trainer_id INT,
+    join_date DATE NOT NULL,
+    is_loyal BOOLEAN DEFAULT FALSE,
+    referred_by INT,
+    FOREIGN KEY (user_id) REFERENCES users(id),
+    FOREIGN KEY (trainer_id) REFERENCES trainers(id),
+    FOREIGN KEY (referred_by) REFERENCES members(id)
+);
+
+CREATE TABLE subscriptions (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    member_id INT NOT NULL,
+    plan_type ENUM('QUARTERLY', 'SEMI_ANNUAL', 'ANNUAL') NOT NULL,
+    start_date DATE NOT NULL,
+    end_date DATE NOT NULL,
+    is_free_extension BOOLEAN DEFAULT FALSE,
+    status ENUM('ACTIVE', 'EXPIRED', 'CANCELLED') DEFAULT 'ACTIVE',
+    FOREIGN KEY (member_id) REFERENCES members(id)
+);
+
+CREATE TABLE training_sessions (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    trainer_id INT NOT NULL,
+    session_date DATE NOT NULL,
+    start_time TIME NOT NULL,
+    end_time TIME NOT NULL,
+    FOREIGN KEY (trainer_id) REFERENCES trainers(id)
+);
+
+CREATE TABLE session_members (
+    session_id INT NOT NULL,
+    member_id INT NOT NULL,
+    PRIMARY KEY (session_id, member_id),
+    FOREIGN KEY (session_id) REFERENCES training_sessions(id),
+    FOREIGN KEY (member_id) REFERENCES members(id)
+);
+
+CREATE TABLE monthly_evaluations (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    member_id INT NOT NULL,
+    trainer_id INT NOT NULL,
+    month_year DATE NOT NULL,
+    target_weight DECIMAL(5,2),
+    actual_weight DECIMAL(5,2),
+    target_bmi DECIMAL(4,2),
+    actual_bmi DECIMAL(4,2),
+    notes TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (member_id) REFERENCES members(id),
+    FOREIGN KEY (trainer_id) REFERENCES trainers(id)
+);
+
+CREATE TABLE events (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    description TEXT,
+    event_date TIMESTAMP,
+    created_by INT,
+    FOREIGN KEY (created_by) REFERENCES users(id)
+);
+
+-- Seed admin account (password: admin123)
+INSERT INTO users (email, password_hash, full_name, role)
+VALUES ('admin@rubygym.com', '$2a$10$8Kx7gXKzGx5gXKzGx5gXKuYQz3Z5gXKzGx5gXKzGx5gXKzGx5gXK', 'Admin', 'ADMIN');
