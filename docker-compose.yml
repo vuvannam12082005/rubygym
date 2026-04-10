@@ -1,0 +1,35 @@
+services:
+  db:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: rubygym123
+      MYSQL_DATABASE: rubygym
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./rubygym/docker:/docker-entrypoint-initdb.d
+      - mysql_data:/var/lib/mysql
+
+  backend:
+    build: ./rubygym/backend
+    ports:
+      - "3000:3000"
+    environment:
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_USER: root
+      DB_PASSWORD: rubygym123
+      DB_NAME: rubygym
+      JWT_SECRET: rubygym-dev-secret-key
+    depends_on:
+      - db
+
+  frontend:
+    build: ./rubygym/frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+
+volumes:
+  mysql_data:
