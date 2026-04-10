@@ -1,0 +1,182 @@
+.app-shell {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 260px 1fr;
+}
+
+.content-shell {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 1.5rem;
+  background: #111827;
+  color: #fff;
+}
+
+.topbar a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.topbar-links {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.brand {
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.user-chip {
+  padding: 0.35rem 0.75rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.14);
+}
+
+.sidebar {
+  padding: 1.5rem;
+  background: #1f2937;
+  color: #fff;
+}
+
+.sidebar h2 {
+  margin-top: 0;
+}
+
+.sidebar-links {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.sidebar-links a {
+  color: #d1d5db;
+  text-decoration: none;
+  padding: 0.65rem 0.75rem;
+  border-radius: 10px;
+}
+
+.sidebar-links a.active,
+.topbar-links a.active {
+  background: #2563eb;
+  color: #fff;
+}
+
+.page-content {
+  flex: 1;
+  padding: 1.5rem;
+}
+
+.page-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+}
+
+.auth-card {
+  max-width: 640px;
+}
+
+.stats-grid,
+.list-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.stat-card,
+.list-card {
+  background: #f8fafc;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  padding: 1rem;
+}
+
+.detail-grid {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.form-grid {
+  display: grid;
+  gap: 1rem;
+}
+
+.form-grid label {
+  display: grid;
+  gap: 0.4rem;
+  font-weight: 600;
+}
+
+.form-grid input,
+.form-grid select,
+.form-grid textarea {
+  padding: 0.75rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  font: inherit;
+}
+
+.primary-button,
+.ghost-button {
+  width: fit-content;
+  padding: 0.75rem 1rem;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  font: inherit;
+}
+
+.primary-button {
+  background: #2563eb;
+  color: #fff;
+}
+
+.ghost-button {
+  background: #e5e7eb;
+  color: #111827;
+}
+
+.error-text {
+  color: #b91c1c;
+}
+
+.success-text {
+  color: #047857;
+}
+
+.table-wrapper {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  padding: 0.75rem;
+  border-bottom: 1px solid #e5e7eb;
+  text-align: left;
+}
+
+.footer {
+  padding: 1rem 1.5rem;
+  color: #475569;
+}
+
+@media (max-width: 900px) {
+  .app-shell {
+    grid-template-columns: 1fr;
+  }
+}

@@ -82,7 +82,3 @@ CREATE TABLE events (
     created_by INT,
     FOREIGN KEY (created_by) REFERENCES users(id)
 );
-
--- Seed admin account (password: admin123)
-INSERT INTO users (email, password_hash, full_name, role)
-VALUES ('admin@rubygym.com', '$2a$10$8Kx7gXKzGx5gXKzGx5gXKuYQz3Z5gXKzGx5gXKzGx5gXKzGx5gXK', 'Admin', 'ADMIN');
